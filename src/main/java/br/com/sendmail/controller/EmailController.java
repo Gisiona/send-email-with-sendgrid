@@ -27,7 +27,18 @@ public class EmailController {
 	private IEmailProcessor emailProcessor;
 		
 	@PostMapping("/simples")
-	private ResponseEntity<EmailResponseDto> sendEmail(@Valid @RequestBody EmailDto email){
+	private ResponseEntity<EmailResponseDto> sendEmailSimples(@Valid @RequestBody EmailDto email){
+		emailProcessor.sendEmailSimple(email);
+		 		
+		UUID uuid = UUID.randomUUID();
+		String ticket = uuid.toString();
+		EmailResponseDto response = new EmailResponseDto(ticket, "E-mail enviado com sucesso.");
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+	}
+	
+	@PostMapping("/customizado")
+	private ResponseEntity<EmailResponseDto> sendEmailCustomizado(@Valid @RequestBody EmailDto email){
 		emailProcessor.sendEmailSimple(email);
 		 		
 		UUID uuid = UUID.randomUUID();
@@ -39,6 +50,6 @@ public class EmailController {
 	
 	@GetMapping
 	private ResponseEntity<String> getHome(){
-		return ResponseEntity.status(HttpStatus.OK).body(String.format("Seja bem vindo a api de enviar e-mail com sendgrid."));
+		return ResponseEntity.status(HttpStatus.OK).body(String.format("Seja bem vindo a api de enviar e-mail."));
 	}
 }

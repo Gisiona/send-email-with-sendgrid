@@ -8,6 +8,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
+
 
 @Service
 public class EmailService {
@@ -24,6 +26,8 @@ public class EmailService {
 	@Async
 	public void sendEmailImage(MimeMessage mime, MimeMessageHelper help) {
 
+		Context context = new Context();
+		
 		System.out.println("E-mail com imagens enviado com sucesso.");
 	}
 }

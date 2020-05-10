@@ -1,5 +1,6 @@
 package br.com.sendmail.processor.impl;
 
+import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,14 @@ public class EmailProcessor implements IEmailProcessor {
 	}
 
 	@Override
-	public void sendEmailImage(EmailDto email) {
+	public void sendEmailImage(EmailDto email) throws MessagingException {
 		MimeMessage mime = null;
-		MimeMessageHelper help = null;
+		
+		MimeMessageHelper help = new MimeMessageHelper(mime, true, "UTF-8"); 
+		help.setFrom(email.getFrom());
+		help.setTo(email.getTo());
+		help.setSubject(email.getSubject());
+		help.setText(email.getMessage(), true);
 		
 		System.out.println("Enviando email com imagens.");
 		emailService.sendEmailImage(mime, help);		
